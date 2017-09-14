@@ -16,10 +16,9 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   presets: [
     ['env', {
-      'es2015': {
-        'loose': true,
-        'modules': building ? false : 'commonjs'
-      }
+      'loose': true,
+      'modules': building ? false : 'commonjs',
+      'uglify': true,
     }],
   ],
   plugins: plugins,

@@ -1,6 +1,26 @@
 import Sister from 'sister';
 import Linear from './easing/Linear';
 
+const updateValue = (ref) => {
+  const diff = ref.startValue > ref.endValue
+    ? -(ref.startValue - ref.endValue)
+    : ref.endValue - ref.startValue;
+
+  ref.value = ref.ease(
+    ref.duration * ref.progress,
+    ref.startValue,
+    diff,
+    ref.duration
+  );
+
+  if (ref.startValue > ref.endValue) {
+    ref.value = Math.max(ref.endValue, Math.min(ref.startValue, ref.value));
+  }
+  else {
+    ref.value = Math.max(ref.startValue, Math.min(ref.endValue, ref.value));
+  }
+};
+
 class Tween {
   constructor({start, end, duration = 1000, ease = Linear, delay = 0}) {
     const emitter = new Sister();
@@ -13,6 +33,7 @@ class Tween {
     this.duration = duration;
     this.ease = ease;
     this.delay = delay;
+    this.active = false;
 
     this.progress = 0;
     this.endTime = null;
@@ -31,6 +52,7 @@ class Tween {
     });
 
     this.animationFrame = requestAnimationFrame(this.tick.bind(this));
+    this.active = true;
 
     return this;
   }
@@ -42,12 +64,9 @@ class Tween {
 
     this.progress = this.progress + ((this.endTime - Date.now()) / this.duration);
     this.endTime = null;
-    this.value = this.ease(
-      this.duration * this.progress,
-      this.startValue,
-      this.endValue,
-      this.duration
-    );
+    this.active = false;
+
+    updateValue(this);
 
     this.trigger('stop', {
       start: this.start,
@@ -70,12 +89,7 @@ class Tween {
       )
     );
 
-    this.value = this.ease(
-      this.duration * this.progress,
-      this.startValue,
-      this.endValue,
-      this.duration
-    );
+    updateValue(this);
 
     const tickResponse = {
       start: this.startValue,
@@ -89,6 +103,7 @@ class Tween {
     this.trigger('tick', tickResponse);
 
     if (this.progress === 1) {
+      this.active = false;
       return this.trigger('complete', tickResponse);
     }
 

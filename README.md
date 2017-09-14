@@ -109,6 +109,13 @@ so you can preview what the easing equation looks like before you use it.
 
 * Sine
 
+### Requirements
+
+Being that this library is targeted towards modern environments, it assumes that
+the browsers running this code support `requestAnimationFrame`. If you need to
+support browsers that don’t support that, be sure to include a polyfill so that
+this will work in those browsers.
+
 ## License
 
 [MIT](LICENSE)
