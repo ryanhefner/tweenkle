@@ -1,4 +1,4 @@
-# [WIP] Tweenkle ✨
+# Tweenkle ✨
 
 Lightweight tweening library built for modern Javascript environments that favor
 small modular components over heavy monolithic bundled libraries.
@@ -32,6 +32,13 @@ Via [Yarn](https://yarn.fyi/tweenkle)
 yarn add tweenkle
 ```
 
+### Requirements
+
+Being that this library is targeted towards modern environments, it assumes that
+the browsers running this code support `requestAnimationFrame`. If you need to
+support browsers that don’t support that, be sure to include a polyfill so that
+this will work in those browsers.
+
 ## How to use
 
 ### `Tween`
@@ -40,37 +47,40 @@ yarn add tweenkle
 
 * `start` - Initial value you would like to tween from.
 
-* `end` - Target value of the tween. Once reached, tween completes.
+* `end` - Target value to tween to. Once reached, the tween completes.
 
-* `duration:Number` - How long the tween will run for. (Default: `1000`)
+* `duration:Number` - How long the tween will run for in milliseconds. (Default: `1000`)
 
 * `ease:Function` - Easing function/equation used to manipulate the value while tweening. (Default: `Linear`)
 
-* `delay:Number` - [Currently not implemented, but exploring how this could be used.] (Default: `0`)
+* `delay:Number` - _Currently not implemented, but exploring how this could be used._ (Default: `0`)
+
+#### Properties
+
+* `active:Boolean` - Whether or not the instance is tweening.
 
 #### Methods
 
-* `start()` - Initiates the start of the tween.
+* `start()` - Start the tween.
 
-* `stop()` - Stops the tween.
+* `stop()` - Stop the tween.
 
 #### Events
 
 * `tick` - Fired while the Tween is tweening.
 
-* `complete` - Fired when the tween completes/reaches the `end` value.
+* `complete` - Fired when the tween completes.
 
 #### Example
 
 ```js
-import Tween from 'tweenkle';
-import { InOut as QuadInOut } from 'tweenkle/easing/Quad';
+import Tween, { Easing } from 'tweenkle';
 
 const tween = new Tween({
     start: 0,
     end: 100,
     duration: 1000,
-    ease: QuadInOut,
+    ease: Easing.Quad.InOut,
   });
 
 tween.on('tick', ({start, end, duration, progress, ease, value}) => {
@@ -89,33 +99,53 @@ tween.start();
 For the visual people out there, I wrote a quick [easing visualizer](https://codepen.io/ryanhefner/details/YxmKQG/)
 so you can preview what the easing equation looks like before you use it.
 
-* Back
+* `Back`
+  * `Back.In`
+  * `Back.Out`
+  * `Back.InOut`
 
-* Bounce
+* `Bounce`
+  * `Bounce.In`
+  * `Bounce.Out`
+  * `Bounce.InOut`
 
-* Circ
+* `Circ`
+  * `Circ.In`
+  * `Circ.Out`
+  * `Circ.InOut`
 
-* Cubic
+* `Cubic`
+  * `Cubic.In`
+  * `Cubic.Out`
+  * `Cubic.InOut`
 
-* Elastic
+* `Elastic`
+  * `Elastic.In`
+  * `Elastic.Out`
+  * `Elastic.InOut`
 
-* Linear
+* `Linear`
 
-* Quad
+* `Quad`
+  * `Quad.In`
+  * `Quad.Out`
+  * `Quad.InOut`
 
-* Quart
+* `Quart`
+  * `Quart.In`
+  * `Quart.Out`
+  * `Quart.InOut`
 
-* Quint
+* `Quint`
+  * `Quint.In`
+  * `Quint.Out`
+  * `Quint.InOut`
 
-* Sine
-
-### Requirements
-
-Being that this library is targeted towards modern environments, it assumes that
-the browsers running this code support `requestAnimationFrame`. If you need to
-support browsers that don’t support that, be sure to include a polyfill so that
-this will work in those browsers.
+* `Sine`
+  * `Sine.In`
+  * `Sine.Out`
+  * `Sine.InOut`
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © [Ryan Hefner](https://www.ryanhefner.com)
