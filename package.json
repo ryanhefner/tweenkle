@@ -48,8 +48,7 @@
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "rollup-watch": "^4.3.1",
-    "uglify-es": "^3.1.0"
+    "rollup-watch": "^4.3.1"
   },
   "keywords": [
     "tween",
