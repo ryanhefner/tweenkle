@@ -8,6 +8,13 @@ import { minify } from 'uglify-es';
 
 const config = {
   input: 'src/index.js',
+  output: {
+    file: './index.js',
+    format: 'umd',
+    name: 'tweenkle',
+    globals: {},
+    exports: 'named',
+  },
   external: [],
   plugins: [
     babel({
@@ -19,13 +26,6 @@ const config = {
     }),
     json(),
   ],
-  output: {
-    file: './index.js',
-    format: 'umd',
-    name: 'tweenkle',
-    globals: {},
-    exports: 'named',
-  },
   banner: `/*! ${pkg.name} v${pkg.version} | (c) ${new Date().getFullYear()} Ryan Hefner | ${pkg.license} License | https://github.com/${pkg.repository} !*/`,
   footer: '/* follow me on Twitter! @ryanhefner */',
 };
