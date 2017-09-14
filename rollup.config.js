@@ -4,7 +4,6 @@ import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import uglify from 'rollup-plugin-uglify';
 import pkg from './package.json';
-import { minify } from 'uglify-es';
 
 const config = {
   input: 'src/index.js',
@@ -31,7 +30,7 @@ const config = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(uglify({}, minify));
+  config.plugins.push(uglify());
 }
 
 export default config;
