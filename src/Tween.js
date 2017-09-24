@@ -1,24 +1,57 @@
 import Sister from 'sister';
 import Linear from './easing/Linear';
 
-const updateValue = (ref) => {
-  const diff = ref.startValue > ref.endValue
-    ? -(ref.startValue - ref.endValue)
-    : ref.endValue - ref.startValue;
+const CSS_UNIT_REGEX = /([0-9]*)([a-zA-Z%]*)/;
 
-  ref.value = ref.ease(
-    ref.duration * ref.progress,
-    ref.startValue,
+const calculateValue = (startValue, endValue, ease, duration, progress) => {
+  /**
+   * TODO: Setup CSS support for basic unit support. - @ryan
+   */
+
+  if (duration === 0) {
+    return endValue;
+  }
+
+  const diff = startValue > endValue
+    ? -(startValue - endValue)
+    : endValue - startValue;
+
+  const value = ease(
+    duration * progress,
+    startValue,
     diff,
-    ref.duration
+    duration
   );
 
-  if (ref.startValue > ref.endValue) {
-    ref.value = Math.max(ref.endValue, Math.min(ref.startValue, ref.value));
+  return startValue > endValue
+    ? Math.max(endValue, Math.min(startValue, value))
+    : Math.max(startValue, Math.min(endValue, value));
+}
+
+const updateValue = (ref) => {
+  if (ref.startValue instanceof Object) {
+    const nextValue = {};
+    Object.keys(ref.startValue).forEach((key) => {
+      nextValue[key] = calculateValue(
+        ref.startValue[key],
+        ref.endValue[key],
+        ref.ease,
+        ref.duration,
+        ref.progress
+      );
+    });
+
+    ref.value = nextValue;
+    return;
   }
-  else {
-    ref.value = Math.max(ref.startValue, Math.min(ref.endValue, ref.value));
-  }
+
+  ref.value = calculateValue(
+    ref.startValue,
+    ref.endValue,
+    ref.ease,
+    ref.duration,
+    ref.progress
+  );
 };
 
 class Tween {
@@ -81,13 +114,7 @@ class Tween {
   }
 
   tick() {
-    this.progress = Math.max(
-      0,
-      Math.min(
-        1,
-        1 - ((this.endTime - Date.now()) / this.duration)
-      )
-    );
+    this.progress = Math.max(0, Math.min(1, 1 - ((this.endTime - Date.now()) / this.duration)));
 
     updateValue(this);
 
@@ -102,7 +129,7 @@ class Tween {
 
     this.trigger('tick', tickResponse);
 
-    if (this.progress === 1) {
+    if (this.progress === 1 || this.duration === 0) {
       this.active = false;
       return this.trigger('complete', tickResponse);
     }
