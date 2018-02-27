@@ -1,11 +1,25 @@
-export { default as Back } from './Back';
-export { default as Bounce } from './Bounce';
-export { default as Circ } from './Circ';
-export { default as Cubic } from './Cubic';
-export { default as Elastic } from './Elastic';
-export { default as Expo } from './Expo';
-export { default as Linear } from './Linear';
-export { default as Quad } from './Quad';
-export { default as Quart } from './Quart';
-export { default as Quint } from './Quint';
-export { default as Sine } from './Sine';
+import Back from './Back';
+import Bounce from './Bounce';
+import Circ from './Circ';
+import Cubic from './Cubic';
+import Elastic from './Elastic';
+import Expo from './Expo';
+import Linear from './Linear';
+import Quad from './Quad';
+import Quart from './Quart';
+import Quint from './Quint';
+import Sine from './Sine';
+
+export default {
+  Back,
+  Bounce,
+  Circ,
+  Cubic,
+  Elastic,
+  Expo,
+  Linear,
+  Quad,
+  Quart,
+  Quint,
+  Sine,
+};
