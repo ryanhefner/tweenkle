@@ -1,6 +1,4 @@
-import * as Easing from './easing';
-import TweenManager from './TweenManager';
 import Tween from './Tween';
+export { default as Easing } from './easing';
 
-export { Easing };
 export default Tween;

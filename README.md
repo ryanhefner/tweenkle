@@ -59,6 +59,8 @@ this will work in those browsers.
 
 * `active:Boolean` - Whether or not the instance is tweening.
 
+* `complete:Boolean` - Whether or not the tween has completed.
+
 #### Methods
 
 * `start()` - Start the tween.
