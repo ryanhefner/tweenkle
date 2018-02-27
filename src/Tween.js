@@ -12,6 +12,11 @@ const calculateValue = (startValue, endValue, ease, duration, progress) => {
     return endValue;
   }
 
+  if (typeof startValue === 'string' || typeof endValue === 'string') {
+    const [start, unit] = CSS_UNIT.match(startValue);
+    const [end] = CSS_UNIT.match(endValue);
+  }
+
   const diff = startValue > endValue
     ? -(startValue - endValue)
     : endValue - startValue;
@@ -67,6 +72,7 @@ class Tween {
     this.ease = ease;
     this.delay = delay;
     this.active = false;
+    this.complete = false;
 
     this.progress = 0;
     this.endTime = null;
@@ -86,6 +92,7 @@ class Tween {
 
     this.animationFrame = requestAnimationFrame(this.tick.bind(this));
     this.active = true;
+    this.complete = false;
 
     return this;
   }
@@ -131,6 +138,7 @@ class Tween {
 
     if (this.progress === 1 || this.duration === 0) {
       this.active = false;
+      this.complete = true;
       return this.trigger('complete', tickResponse);
     }
 
