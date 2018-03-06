@@ -1,4 +1,4 @@
-# Tweenkle ✨
+# tweenkle ✨
 
 Lightweight tweening library built for modern Javascript environments that favor
 small modular components over heavy monolithic bundled libraries.
