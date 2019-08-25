@@ -12,10 +12,10 @@ const calculateValue = (startValue, endValue, ease, duration, progress) => {
     return endValue;
   }
 
-  if (typeof startValue === 'string' || typeof endValue === 'string') {
-    const [start, unit] = CSS_UNIT_REGEX.match(startValue);
-    const [end] = CSS_UNIT_REGEX.match(endValue);
-  }
+  // if (typeof startValue === 'string' || typeof endValue === 'string') {
+  //   const [matchStart, start, unit] = CSS_UNIT_REGEX.exec(startValue);
+  //   const [matchEnd, end] = CSS_UNIT_REGEX.exec(endValue);
+  // }
 
   const diff = startValue > endValue
     ? -(startValue - endValue)
